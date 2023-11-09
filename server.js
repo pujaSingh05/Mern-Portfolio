@@ -1,6 +1,7 @@
 const express  = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 
 
 //dotenv configuration
@@ -13,9 +14,15 @@ const app = express();
 app.use(cors());
 app.use(express.json())
 
+//static files9
+app.use(express.static(path.join(__dirname, './client/build')))
+
+app.get('*', function(req,res){
+    res.sendFile(path.join(__dirname, './client/index.html'))
+});
 
 //routes
-app.use('/api/v1/portfolio', require('./routes/portfolioRoutes') );
+app.use('/api/v1/portfolio', require('./routes/portfolioRoutes'));
 
 
 //port
